@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Tap & Barrel Bridges</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --black: #080808;
+    --white: #f0ece4;
+    --gold: #c9a96e;
+    --gold-dim: rgba(201,169,110,0.12);
+    --gold-line: rgba(201,169,110,0.28);
+    --mid: rgba(240,236,228,0.45);
+    --red: #c0392b;
+    --red-dim: rgba(192,57,43,0.1);
+    --red-line: rgba(192,57,43,0.3);
+  }
+  html, body {
+    height: 100%;
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 300;
+    overflow: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 999; opacity: 0.5;
+  }
+  .glow {
+    position: fixed; top: -200px; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 400px;
+    background: radial-gradient(ellipse, rgba(201,169,110,0.06) 0%, transparent 70%);
+    pointer-events: none; z-index: 0;
+  }
+  .page {
+    position: relative; z-index: 1;
+    height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 40px 24px;
+  }
+  .top-label {
+    position: absolute; top: 32px; left: 50%;
+    transform: translateX(-50%);
+    display: flex; align-items: center; gap: 10px;
+    white-space: nowrap;
+    opacity: 0; animation: fadeDown 0.6s ease forwards 0.1s;
+  }
+  .restaurant-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px; font-weight: 400;
+    letter-spacing: 0.25em; text-transform: uppercase;
+    color: rgba(240,236,228,0.5);
+  }
+  .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--gold); opacity: 0.5; }
+  .powered { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(201,169,110,0.4); }
+  .deco-line {
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, transparent, var(--gold-line));
+    margin-bottom: 28px;
+    opacity: 0; animation: fadeIn 0.8s ease forwards 0.3s;
+  }
+  .heading-wrap {
+    text-align: center; margin-bottom: 8px;
+    opacity: 0; animation: fadeUp 0.7s ease forwards 0.4s;
+  }
+  .heading-wrap h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 8vw, 52px);
+    font-weight: 300; line-height: 1.1;
+    letter-spacing: 0.02em; color: var(--white);
+  }
+  .heading-wrap h1 em { font-style: italic; color: rgba(240,236,228,0.45); }
+  .subtitle {
+    font-size: 12px; letter-spacing: 0.12em;
+    color: rgba(240,236,228,0.3); text-align: center;
+    margin-bottom: 40px;
+    opacity: 0; animation: fadeUp 0.7s ease forwards 0.55s;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    width: 100%; max-width: 340px;
+    opacity: 0; animation: fadeUp 0.7s ease forwards 0.7s;
+  }
+  .btn {
+    position: relative;
+    display: flex; flex-direction: column;
+    align-items: flex-start;
+    padding: 18px 20px;
+    border: 1px solid;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    overflow: hidden;
+    -webkit-tap-highlight-color: transparent;
+    background: transparent;
+    color: var(--white);
+    font-family: 'Outfit', sans-serif;
+    text-align: left;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-icon { font-size: 22px; margin-bottom: 10px; line-height: 1; }
+  .btn-label { font-size: 13px; font-weight: 500; letter-spacing: 0.04em; line-height: 1.3; }
+  .btn-sub { font-size: 10px; letter-spacing: 0.08em; color: var(--mid); margin-top: 3px; font-weight: 300; }
+
+  /* FOOD */
+  .btn-food { border-color: var(--gold-line); background: var(--gold-dim); }
+  .btn-food:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,169,110,0.12); border-color: rgba(201,169,110,0.5); }
+  .btn-food .btn-label { color: var(--gold); }
+
+  /* DRINKS */
+  .btn-drinks { border-color: var(--gold-line); background: var(--gold-dim); }
+  .btn-drinks:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,169,110,0.12); border-color: rgba(201,169,110,0.5); }
+  .btn-drinks .btn-label { color: var(--gold); }
+
+  /* FEEDBACK */
+  .btn-feedback { border-color: var(--red-line); background: var(--red-dim); grid-column: span 2; flex-direction: row; align-items: center; gap: 16px; }
+  .btn-feedback:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(192,57,43,0.12); border-color: rgba(192,57,43,0.5); }
+  .btn-feedback .btn-icon { margin-bottom: 0; font-size: 26px; }
+  .btn-feedback .btn-label { color: #e57373; }
+  .btn-feedback .btn-content { display: flex; flex-direction: column; }
+
+  /* DISABLED */
+  .btn-disabled {
+    border-color: rgba(240,236,228,0.08);
+    background: rgba(240,236,228,0.03);
+    cursor: default; opacity: 0.5;
+  }
+  .btn-disabled .btn-label { color: var(--mid); }
+  .btn-disabled:active { transform: none; }
+  .btn-disabled:hover { transform: none; box-shadow: none; }
+  .btn-request {
+    font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(240,236,228,0.25); margin-top: 4px;
+    border: 1px solid rgba(240,236,228,0.1);
+    padding: 2px 6px; display: inline-block;
+  }
+
+  .deco-line-bottom {
+    width: 1px; height: 32px;
+    background: linear-gradient(to bottom, var(--gold-line), transparent);
+    margin-top: 32px;
+    opacity: 0; animation: fadeIn 0.8s ease forwards 1s;
+  }
+  .footer {
+    position: absolute; bottom: 24px; left: 50%;
+    transform: translateX(-50%);
+    font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(201,169,110,0.25);
+    opacity: 0; animation: fadeIn 0.8s ease forwards 1.1s;
+    white-space: nowrap;
+  }
+
+  /* MENU OVERLAY */
+  .overlay {
+    position: fixed; inset: 0;
+    background: var(--black);
+    z-index: 50;
+    display: flex; flex-direction: column;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.4s ease;
+    overflow: hidden;
+  }
+  .overlay.visible { opacity: 1; pointer-events: all; }
+  .overlay-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    flex-shrink: 0;
+  }
+  .overlay-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px; font-weight: 400;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--gold);
+  }
+  .close-btn {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: transparent; color: var(--mid);
+    font-size: 18px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: border-color 0.2s, color 0.2s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .close-btn:hover { border-color: var(--gold-line); color: var(--gold); }
+  .overlay-content { flex: 1; overflow-y: auto; padding: 24px; }
+  .menu-section { margin-bottom: 32px; }
+  .menu-section-title {
+    font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 16px;
+    padding-bottom: 8px; border-bottom: 1px solid var(--gold-line);
+  }
+  .menu-item {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    gap: 12px;
+  }
+  .menu-item:last-child { border-bottom: none; }
+  .menu-item-info { flex: 1; }
+  .menu-item-name {
+    font-size: 13px; font-weight: 500; color: var(--white);
+    letter-spacing: 0.02em; margin-bottom: 3px;
+  }
+  .menu-item-desc { font-size: 11px; color: var(--mid); line-height: 1.5; }
+  .menu-item-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px; color: var(--gold);
+    white-space: nowrap; flex-shrink: 0;
+    padding-top: 2px;
+  }
+  .drink-item {
+    display: flex; justify-content: space-between;
+    padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-size: 12px;
+  }
+  .drink-item:last-child { border-bottom: none; }
+  .drink-name { color: var(--white); flex: 1; }
+  .drink-sub { color: var(--mid); font-size: 11px; margin-top: 2px; }
+  .drink-price { color: var(--gold); font-family: 'Cormorant Garamond', serif; font-size: 14px; white-space: nowrap; padding-left: 12px; }
+
+  /* WIFI OVERLAY */
+  .wifi-content {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    height: 100%; gap: 20px; text-align: center;
+    padding: 40px;
+  }
+  .wifi-icon { font-size: 48px; color: var(--gold); }
+  .wifi-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px; color: var(--white); letter-spacing: 0.05em;
+  }
+  .wifi-password {
+    font-size: 32px; font-weight: 500; color: var(--gold);
+    letter-spacing: 0.15em; padding: 16px 24px;
+    border: 1px solid var(--gold-line);
+    background: var(--gold-dim);
+  }
+  .wifi-label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--mid); }
+
+  /* RIPPLE */
+  .ripple {
+    position: absolute; border-radius: 50%;
+    width: 8px; height: 8px;
+    background: rgba(255,255,255,0.1);
+    transform: scale(0);
+    animation: ripple-anim 0.5s ease-out forwards;
+    pointer-events: none;
+  }
+  @keyframes ripple-anim { to { transform: scale(30); opacity: 0; } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeDown { from { opacity: 0; transform: translate(-50%, -10px); } to { opacity: 1; transform: translate(-50%, 0); } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+</style>
+</head>
+<body>
+<div class="glow"></div>
+
+<div class="page" id="mainPage">
+  <div class="top-label">
+    <span class="restaurant-name">Tap & Barrel Bridges</span>
+    <span class="dot"></span>
+    <span class="powered">Powered by Interform</span>
+  </div>
+
+  <div class="deco-line"></div>
+
+  <div class="heading-wrap">
+    <h1>Welcome to<br><em>Bridges</em></h1>
+  </div>
+  <p class="subtitle">Our goal is to make your experience perfect</p>
+
+  <div class="grid">
+    <button class="btn btn-food" onclick="openOverlay('food')">
+      <span class="btn-icon">🦞</span>
+      <div class="btn-label">Food Menu</div>
+      <div class="btn-sub">Celebration of Seafood</div>
+    </button>
+
+    <button class="btn btn-drinks" onclick="openOverlay('drinks')">
+      <span class="btn-icon">🍷</span>
+      <div class="btn-label">Drinks Menu</div>
+      <div class="btn-sub">Wine, cocktails & more</div>
+    </button>
+
+    <button class="btn btn-disabled" onclick="openOverlay('wifi')">
+      <span class="btn-icon">📶</span>
+      <div class="btn-label">Connect to WiFi</div>
+      <div class="btn-sub">Free guest access</div>
+    </button>
+
+    <button class="btn btn-disabled" style="cursor:default">
+      <span class="btn-icon">🎁</span>
+      <div class="btn-label">Loyalty Rewards</div>
+      <div class="btn-sub">Coming soon</div>
+      <span class="btn-request">Available by request</span>
+    </button>
+
+    <button class="btn btn-disabled" style="cursor:default; grid-column: span 2; flex-direction: row; align-items: center; gap: 16px;">
+      <span class="btn-icon" style="margin-bottom:0; font-size:22px;">🙋</span>
+      <div>
+        <div class="btn-label">Call Your Server</div>
+        <div class="btn-sub">We'll be right with you</div>
+        <span class="btn-request">Available by request</span>
+      </div>
+    </button>
+
+    <a class="btn btn-feedback" href="table-marker-feedback.html">
+      <span class="btn-icon">💬</span>
+      <div class="btn-content">
+        <div class="btn-label">Share Feedback on the fly!</div>
+        <div class="btn-sub">Help us make your evening perfect</div>
+      </div>
+    </a>
+  </div>
+
+  <div class="deco-line-bottom"></div>
+  <div class="footer">interformlabs.com</div>
+</div>
+
+<!-- FOOD OVERLAY -->
+<div class="overlay" id="foodOverlay">
+  <div class="overlay-header">
+    <span class="overlay-title">Celebration of Seafood</span>
+    <button class="close-btn" onclick="closeOverlay('food')">✕</button>
+  </div>
+  <div class="overlay-content">
+    <div class="menu-section">
+      <div class="menu-section-title">To Share</div>
+      <div class="menu-item">
+        <div class="menu-item-info">
+          <div class="menu-item-name">Chilled Seafood Platter</div>
+          <div class="menu-item-desc">Canadian lobster tails, dungeness crab legs, jumbo prawns, harissa mussels, peruvian tuna ceviche, harissa cocktail sauce, creole remoulade</div>
+        </div>
+        <div class="menu-item-price">$89 / $159</div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-info">
+          <div class="menu-item-name">Jumbo Prawn Cocktail</div>
+          <div class="menu-item-desc">Half a dozen jumbo prawns, harissa cocktail sauce, creole remoulade, lemon</div>
+        </div>
+        <div class="menu-item-price">$21.95</div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-info">
+          <div class="menu-item-name">Peruvian Ahi Tuna Ceviche</div>
+          <div class="menu-item-desc">Aji amarillo leche de tigre, avocado, green onion, pickled shallots, fresno chili, micro cilantro, corn nuts, cumin dusted tortilla chips</div>
+        </div>
+        <div class="menu-item-price">$19.50</div>
+      </div>
+    </div>
+    <div class="menu-section">
+      <div class="menu-section-title">Mains</div>
+      <div class="menu-item">
+        <div class="menu-item-info">
+          <div class="menu-item-name">Lobster Roll</div>
+          <div class="menu-item-desc">Canadian lobster, crab, prawns, celery, lemon aioli, green onion, micro greens, old bay seasoning, butter-toasted milk bun, fries</div>
+        </div>
+        <div class="menu-item-price">$31.95</div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-info">
+          <div class="menu-item-name">Lobster Mac & Cheese</div>
+          <div class="menu-item-desc">Canadian lobster, lobster and sharp cheddar béchamel, cavatappi noodles, parmesan breadcrumbs, parsley, lemon</div>
+        </div>
+        <div class="menu-item-price">$32.95</div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-info">
+          <div class="menu-item-name">Steak & Lobster</div>
+          <div class="menu-item-desc">Canadian lobster tail, chimichurri butter, seasonal vegetables, roasted garlic mashed potatoes</div>
+        </div>
+        <div class="menu-item-price">$54 – $63</div>
+      </div>
+    </div>
+    <div class="menu-section">
+      <div class="menu-section-title">Featured Cocktail</div>
+      <div class="menu-item">
+        <div class="menu-item-info">
+          <div class="menu-item-name">Bridges Caesar</div>
+          <div class="menu-item-desc">Absolut vodka, signature hot sauce, horseradish, clamato, castelvetrano olives, jumbo prawn</div>
+        </div>
+        <div class="menu-item-price">$19.95</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DRINKS OVERLAY -->
+<div class="overlay" id="drinksOverlay">
+  <div class="overlay-header">
+    <span class="overlay-title">Drinks Menu</span>
+    <button class="close-btn" onclick="closeOverlay('drinks')">✕</button>
+  </div>
+  <div class="overlay-content">
+    <div class="menu-section">
+      <div class="menu-section-title">Signature Cocktails</div>
+      <div class="drink-item"><div><div class="drink-name">Passion Star Martini</div><div class="drink-sub">Absolut vanilia, campari, passion fruit, sparkling wine, lime</div></div><div class="drink-price">$13.95</div></div>
+      <div class="drink-item"><div><div class="drink-name">Purple Reign</div><div class="drink-sub">Empress 1908 gin, ube, elderflower, lemon, egg white</div></div><div class="drink-price">$16.95</div></div>
+      <div class="drink-item"><div><div class="drink-name">Espresso Martini</div><div class="drink-sub">Absolut vodka, kahlúa, fresh espresso, crème de cacao</div></div><div class="drink-price">$14.95</div></div>
+      <div class="drink-item"><div><div class="drink-name">Bridges Caesar</div><div class="drink-sub">Always a double — absolut vodka, signature hot sauce, jumbo prawn</div></div><div class="drink-price">$19.95</div></div>
+      <div class="drink-item"><div><div class="drink-name">Signature Caesar</div><div class="drink-sub">Always a double — polar ice vodka, dill pickle pepperoni</div></div><div class="drink-price">$14.50</div></div>
+    </div>
+    <div class="menu-section">
+      <div class="menu-section-title">Tequila & Margaritas</div>
+      <div class="drink-item"><div><div class="drink-name">Classic Margarita</div><div class="drink-sub">El Jimador blanco, triple sec, lime, salt rim</div></div><div class="drink-price">$13.95</div></div>
+      <div class="drink-item"><div><div class="drink-name">Coconut Margarita</div><div class="drink-sub">El Jimador blanco, 1800 coconut tequila, coconut milk</div></div><div class="drink-price">$14.50</div></div>
+      <div class="drink-item"><div><div class="drink-name">Top Shelf Margarita</div><div class="drink-sub">Herradura reposado, grand marnier, orange, agave</div></div><div class="drink-price">$17.95</div></div>
+    </div>
+    <div class="menu-section">
+      <div class="menu-section-title">Spritz Season</div>
+      <div class="drink-item"><div><div class="drink-name">Aperol Spritz</div><div class="drink-sub">Aperol, sparkling wine, soda, orange</div></div><div class="drink-price">$14.50</div></div>
+      <div class="drink-item"><div><div class="drink-name">Limoncello Spritz</div><div class="drink-sub">Limoncello, sparkling wine, soda, basil, lemon</div></div><div class="drink-price">$14.50</div></div>
+    </div>
+    <div class="menu-section">
+      <div class="menu-section-title">Happy Hour · Mon–Fri 3–5pm & Daily 9pm–Close</div>
+      <div class="drink-item"><div><div class="drink-name">Well Highballs</div><div class="drink-sub">1oz</div></div><div class="drink-price">$5</div></div>
+      <div class="drink-item"><div><div class="drink-name">Phillips Tilt Lager</div><div class="drink-sub">16oz pint</div></div><div class="drink-price">$5</div></div>
+      <div class="drink-item"><div><div class="drink-name">Classic Margarita</div><div class="drink-sub">2oz</div></div><div class="drink-price">$10</div></div>
+      <div class="drink-item"><div><div class="drink-name">Aperol Spritz</div><div class="drink-sub">Happy hour price</div></div><div class="drink-price">$11</div></div>
+    </div>
+    <div class="menu-section">
+      <div class="menu-section-title">BC Beer on Tap</div>
+      <div class="drink-item"><div><div class="drink-name">Phillips Tilt Lager 5%</div></div><div class="drink-price">$8.50 / $9.75</div></div>
+      <div class="drink-item"><div><div class="drink-name">BREWHALL Hall Pass IPA 6.2%</div></div><div class="drink-price">$10.75 / $11.25</div></div>
+      <div class="drink-item"><div><div class="drink-name">Parkside Dreamboat Hazy IPA 6.3%</div></div><div class="drink-price">$11 / $11.25</div></div>
+      <div class="drink-item"><div><div class="drink-name">Superflux Easy Tiger Pale Ale 4.5%</div></div><div class="drink-price">$10 / $11.25</div></div>
+    </div>
+    <div class="menu-section">
+      <div class="menu-section-title">White Wine</div>
+      <div class="drink-item"><div><div class="drink-name">JoieFarm 'A Noble Blend' — Okanagan, BC</div></div><div class="drink-price">$13 / $54</div></div>
+      <div class="drink-item"><div><div class="drink-name">Stoneleigh Sauvignon Blanc — Marlborough, NZ</div></div><div class="drink-price">$15 / $60</div></div>
+      <div class="drink-item"><div><div class="drink-name">Pascal Jolivet Sancerre — Loire Valley</div></div><div class="drink-price">$89 btl</div></div>
+    </div>
+    <div class="menu-section">
+      <div class="menu-section-title">Red Wine</div>
+      <div class="drink-item"><div><div class="drink-name">Quails' Gate Pinot Noir — Okanagan, BC</div></div><div class="drink-price">$20 / $84</div></div>
+      <div class="drink-item"><div><div class="drink-name">Campo Viejo Reserva — Rioja, Spain</div></div><div class="drink-price">$15 / $60</div></div>
+      <div class="drink-item"><div><div class="drink-name">The Prisoner Red Blend — Napa Valley</div></div><div class="drink-price">$144 btl</div></div>
+    </div>
+    <div class="menu-section">
+      <div class="menu-section-title">Rosé & Sparkling</div>
+      <div class="drink-item"><div><div class="drink-name">Château d'Esclans 'Whispering Angel' — Provence</div></div><div class="drink-price">$22 / $78</div></div>
+      <div class="drink-item"><div><div class="drink-name">Moët & Chandon Impérial — Champagne</div></div><div class="drink-price">$170 btl</div></div>
+      <div class="drink-item"><div><div class="drink-name">Dom Pérignon Brut — Champagne</div></div><div class="drink-price">$525 btl</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- WIFI OVERLAY -->
+<div class="overlay" id="wifiOverlay">
+  <div class="overlay-header">
+    <span class="overlay-title">Guest WiFi</span>
+    <button class="close-btn" onclick="closeOverlay('wifi')">✕</button>
+  </div>
+  <div class="overlay-content">
+    <div class="wifi-content">
+      <div class="wifi-icon">📶</div>
+      <div>
+        <div class="wifi-label" style="margin-bottom:8px">Network</div>
+        <div class="wifi-name">Bridges_Guest</div>
+      </div>
+      <div>
+        <div class="wifi-label" style="margin-bottom:8px">Password</div>
+        <div class="wifi-password">bridges2024</div>
+      </div>
+      <div style="font-size:11px; color:var(--mid); text-align:center; line-height:1.6;">
+        Complimentary WiFi for all guests.<br>Please ask your server if you need assistance.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.btn:not(.btn-disabled)').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      const ripple = document.createElement('span');
+      ripple.className = 'ripple';
+      const rect = btn.getBoundingClientRect();
+      ripple.style.left = (e.clientX - rect.left - 4) + 'px';
+      ripple.style.top = (e.clientY - rect.top - 4) + 'px';
+      btn.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 600);
+    });
+  });
+
+  function openOverlay(type) {
+    document.getElementById(type + 'Overlay').classList.add('visible');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeOverlay(type) {
+    document.getElementById(type + 'Overlay').classList.remove('visible');
+    document.body.style.overflow = '';
+  }
+</script>
+</body>
+</html>
