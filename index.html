@@ -116,9 +116,6 @@
   .btn-food { border-color: var(--gold-line); background: var(--gold-dim); }
   .btn-food:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,169,110,0.12); border-color: rgba(201,169,110,0.5); }
   .btn-food .btn-label { color: var(--gold); }
-  .btn-drinks { border-color: var(--gold-line); background: var(--gold-dim); }
-  .btn-drinks:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,169,110,0.12); border-color: rgba(201,169,110,0.5); }
-  .btn-drinks .btn-label { color: var(--gold); }
   .btn-feedback { border-color: var(--red-line); background: var(--red-dim); grid-column: span 2; flex-direction: row; align-items: center; gap: 16px; }
   .btn-feedback:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(192,57,43,0.12); border-color: rgba(192,57,43,0.5); }
   .btn-feedback .btn-icon { margin-bottom: 0; font-size: 26px; }
@@ -185,28 +182,6 @@
   }
   .close-btn:hover { border-color: var(--gold-line); color: var(--gold); }
   .overlay-content { flex: 1; overflow-y: auto; padding: 24px; }
-  .menu-section { margin-bottom: 32px; }
-  .menu-section-title {
-    font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 16px;
-    padding-bottom: 8px; border-bottom: 1px solid var(--gold-line);
-  }
-  .menu-item {
-    display: flex; justify-content: space-between; align-items: flex-start;
-    padding: 12px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
-    gap: 12px;
-  }
-  .menu-item:last-child { border-bottom: none; }
-  .menu-item-info { flex: 1; }
-  .menu-item-name { font-size: 13px; font-weight: 500; color: var(--white); letter-spacing: 0.02em; margin-bottom: 3px; }
-  .menu-item-desc { font-size: 11px; color: var(--mid); line-height: 1.5; }
-  .menu-item-price { font-family: 'Cormorant Garamond', serif; font-size: 16px; color: var(--gold); white-space: nowrap; flex-shrink: 0; padding-top: 2px; }
-  .drink-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 12px; }
-  .drink-item:last-child { border-bottom: none; }
-  .drink-name { color: var(--white); flex: 1; }
-  .drink-sub { color: var(--mid); font-size: 11px; margin-top: 2px; }
-  .drink-price { color: var(--gold); font-family: 'Cormorant Garamond', serif; font-size: 14px; white-space: nowrap; padding-left: 12px; }
   .wifi-content {
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
@@ -250,27 +225,32 @@
   </div>
   <p class="subtitle">Our goal is to make your experience perfect</p>
   <div class="grid">
-    <button class="btn btn-food" onclick="openOverlay('food')">
+
+    <a class="btn btn-food" href="https://tapandbarrel.com/wp-content/uploads/2026/04/Tap-Barrel_Celebration-of-Seafood-Menu_03.19.26_Web.pdf" target="_blank">
       <span class="btn-icon">🦞</span>
       <div class="btn-label">Food Menu</div>
       <div class="btn-sub">Celebration of Seafood</div>
-    </button>
-    <button class="btn btn-drinks" onclick="openOverlay('drinks')">
+    </a>
+
+    <a class="btn btn-food" href="https://tapandbarrel.com/wp-content/uploads/2026/04/Bridges-Drink-Menu.pdf" target="_blank">
       <span class="btn-icon">🍷</span>
       <div class="btn-label">Drinks Menu</div>
       <div class="btn-sub">Wine, cocktails & more</div>
-    </button>
+    </a>
+
     <button class="btn btn-food" onclick="openOverlay('wifi')">
       <span class="btn-icon">📶</span>
       <div class="btn-label">Connect to WiFi</div>
       <div class="btn-sub">Free guest access</div>
     </button>
+
     <button class="btn btn-disabled" style="cursor:default">
       <span class="btn-icon">🎁</span>
       <div class="btn-label">Loyalty Rewards</div>
       <div class="btn-sub">Coming soon</div>
       <span class="btn-request">Available by request</span>
     </button>
+
     <button class="btn btn-disabled" style="cursor:default; grid-column: span 2; flex-direction: row; align-items: center; gap: 16px;">
       <span class="btn-icon" style="margin-bottom:0; font-size:22px;">🙋</span>
       <div>
@@ -279,6 +259,7 @@
         <span class="btn-request">Available by request</span>
       </div>
     </button>
+
     <a class="btn btn-feedback" href="feedback.html">
       <span class="btn-icon">💬</span>
       <div class="btn-content">
@@ -286,138 +267,10 @@
         <div class="btn-sub">Help us make your evening great</div>
       </div>
     </a>
+
   </div>
   <div class="deco-line-bottom"></div>
   <div class="footer">interformlabs.com</div>
-</div>
-
-<!-- FOOD OVERLAY -->
-<div class="overlay" id="foodOverlay">
-  <div class="overlay-header">
-    <span class="overlay-title">Celebration of Seafood</span>
-    <button class="close-btn" onclick="closeOverlay('food')">✕</button>
-  </div>
-  <div class="overlay-content">
-    <div class="menu-section">
-      <div class="menu-section-title">To Share</div>
-      <div class="menu-item">
-        <div class="menu-item-info">
-          <div class="menu-item-name">Chilled Seafood Platter</div>
-          <div class="menu-item-desc">Canadian lobster tails, dungeness crab legs, jumbo prawns, harissa mussels, peruvian tuna ceviche, harissa cocktail sauce, creole remoulade</div>
-        </div>
-        <div class="menu-item-price">$89 / $159</div>
-      </div>
-      <div class="menu-item">
-        <div class="menu-item-info">
-          <div class="menu-item-name">Jumbo Prawn Cocktail</div>
-          <div class="menu-item-desc">Half a dozen jumbo prawns, harissa cocktail sauce, creole remoulade, lemon</div>
-        </div>
-        <div class="menu-item-price">$21.95</div>
-      </div>
-      <div class="menu-item">
-        <div class="menu-item-info">
-          <div class="menu-item-name">Peruvian Ahi Tuna Ceviche</div>
-          <div class="menu-item-desc">Aji amarillo leche de tigre, avocado, green onion, pickled shallots, fresno chili, micro cilantro, corn nuts, cumin dusted tortilla chips</div>
-        </div>
-        <div class="menu-item-price">$19.50</div>
-      </div>
-    </div>
-    <div class="menu-section">
-      <div class="menu-section-title">Mains</div>
-      <div class="menu-item">
-        <div class="menu-item-info">
-          <div class="menu-item-name">Lobster Roll</div>
-          <div class="menu-item-desc">Canadian lobster, crab, prawns, celery, lemon aioli, green onion, micro greens, old bay seasoning, butter-toasted milk bun, fries</div>
-        </div>
-        <div class="menu-item-price">$31.95</div>
-      </div>
-      <div class="menu-item">
-        <div class="menu-item-info">
-          <div class="menu-item-name">Lobster Mac & Cheese</div>
-          <div class="menu-item-desc">Canadian lobster, lobster and sharp cheddar béchamel, cavatappi noodles, parmesan breadcrumbs, parsley, lemon</div>
-        </div>
-        <div class="menu-item-price">$32.95</div>
-      </div>
-      <div class="menu-item">
-        <div class="menu-item-info">
-          <div class="menu-item-name">Steak & Lobster</div>
-          <div class="menu-item-desc">Canadian lobster tail, chimichurri butter, seasonal vegetables, roasted garlic mashed potatoes</div>
-        </div>
-        <div class="menu-item-price">$54 – $63</div>
-      </div>
-    </div>
-    <div class="menu-section">
-      <div class="menu-section-title">Featured Cocktail</div>
-      <div class="menu-item">
-        <div class="menu-item-info">
-          <div class="menu-item-name">Bridges Caesar</div>
-          <div class="menu-item-desc">Absolut vodka, signature hot sauce, horseradish, clamato, castelvetrano olives, jumbo prawn</div>
-        </div>
-        <div class="menu-item-price">$19.95</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- DRINKS OVERLAY -->
-<div class="overlay" id="drinksOverlay">
-  <div class="overlay-header">
-    <span class="overlay-title">Drinks Menu</span>
-    <button class="close-btn" onclick="closeOverlay('drinks')">✕</button>
-  </div>
-  <div class="overlay-content">
-    <div class="menu-section">
-      <div class="menu-section-title">Signature Cocktails</div>
-      <div class="drink-item"><div><div class="drink-name">Passion Star Martini</div><div class="drink-sub">Absolut vanilia, campari, passion fruit, sparkling wine, lime</div></div><div class="drink-price">$13.95</div></div>
-      <div class="drink-item"><div><div class="drink-name">Purple Reign</div><div class="drink-sub">Empress 1908 gin, ube, elderflower, lemon, egg white</div></div><div class="drink-price">$16.95</div></div>
-      <div class="drink-item"><div><div class="drink-name">Espresso Martini</div><div class="drink-sub">Absolut vodka, kahlúa, fresh espresso, crème de cacao</div></div><div class="drink-price">$14.95</div></div>
-      <div class="drink-item"><div><div class="drink-name">Bridges Caesar</div><div class="drink-sub">Always a double — absolut vodka, signature hot sauce, jumbo prawn</div></div><div class="drink-price">$19.95</div></div>
-      <div class="drink-item"><div><div class="drink-name">Signature Caesar</div><div class="drink-sub">Always a double — polar ice vodka, dill pickle pepperoni</div></div><div class="drink-price">$14.50</div></div>
-    </div>
-    <div class="menu-section">
-      <div class="menu-section-title">Tequila & Margaritas</div>
-      <div class="drink-item"><div><div class="drink-name">Classic Margarita</div><div class="drink-sub">El Jimador blanco, triple sec, lime, salt rim</div></div><div class="drink-price">$13.95</div></div>
-      <div class="drink-item"><div><div class="drink-name">Coconut Margarita</div><div class="drink-sub">El Jimador blanco, 1800 coconut tequila, coconut milk</div></div><div class="drink-price">$14.50</div></div>
-      <div class="drink-item"><div><div class="drink-name">Top Shelf Margarita</div><div class="drink-sub">Herradura reposado, grand marnier, orange, agave</div></div><div class="drink-price">$17.95</div></div>
-    </div>
-    <div class="menu-section">
-      <div class="menu-section-title">Spritz Season</div>
-      <div class="drink-item"><div><div class="drink-name">Aperol Spritz</div><div class="drink-sub">Aperol, sparkling wine, soda, orange</div></div><div class="drink-price">$14.50</div></div>
-      <div class="drink-item"><div><div class="drink-name">Limoncello Spritz</div><div class="drink-sub">Limoncello, sparkling wine, soda, basil, lemon</div></div><div class="drink-price">$14.50</div></div>
-    </div>
-    <div class="menu-section">
-      <div class="menu-section-title">Happy Hour · Mon–Fri 3–5pm & Daily 9pm–Close</div>
-      <div class="drink-item"><div><div class="drink-name">Well Highballs</div><div class="drink-sub">1oz</div></div><div class="drink-price">$5</div></div>
-      <div class="drink-item"><div><div class="drink-name">Phillips Tilt Lager</div><div class="drink-sub">16oz pint</div></div><div class="drink-price">$5</div></div>
-      <div class="drink-item"><div><div class="drink-name">Classic Margarita</div><div class="drink-sub">2oz</div></div><div class="drink-price">$10</div></div>
-      <div class="drink-item"><div><div class="drink-name">Aperol Spritz</div><div class="drink-sub">Happy hour price</div></div><div class="drink-price">$11</div></div>
-    </div>
-    <div class="menu-section">
-      <div class="menu-section-title">BC Beer on Tap</div>
-      <div class="drink-item"><div><div class="drink-name">Phillips Tilt Lager 5%</div></div><div class="drink-price">$8.50 / $9.75</div></div>
-      <div class="drink-item"><div><div class="drink-name">BREWHALL Hall Pass IPA 6.2%</div></div><div class="drink-price">$10.75 / $11.25</div></div>
-      <div class="drink-item"><div><div class="drink-name">Parkside Dreamboat Hazy IPA 6.3%</div></div><div class="drink-price">$11 / $11.25</div></div>
-      <div class="drink-item"><div><div class="drink-name">Superflux Easy Tiger Pale Ale 4.5%</div></div><div class="drink-price">$10 / $11.25</div></div>
-    </div>
-    <div class="menu-section">
-      <div class="menu-section-title">White Wine</div>
-      <div class="drink-item"><div><div class="drink-name">JoieFarm 'A Noble Blend' — Okanagan, BC</div></div><div class="drink-price">$13 / $54</div></div>
-      <div class="drink-item"><div><div class="drink-name">Stoneleigh Sauvignon Blanc — Marlborough, NZ</div></div><div class="drink-price">$15 / $60</div></div>
-      <div class="drink-item"><div><div class="drink-name">Pascal Jolivet Sancerre — Loire Valley</div></div><div class="drink-price">$89 btl</div></div>
-    </div>
-    <div class="menu-section">
-      <div class="menu-section-title">Red Wine</div>
-      <div class="drink-item"><div><div class="drink-name">Quails' Gate Pinot Noir — Okanagan, BC</div></div><div class="drink-price">$20 / $84</div></div>
-      <div class="drink-item"><div><div class="drink-name">Campo Viejo Reserva — Rioja, Spain</div></div><div class="drink-price">$15 / $60</div></div>
-      <div class="drink-item"><div><div class="drink-name">The Prisoner Red Blend — Napa Valley</div></div><div class="drink-price">$144 btl</div></div>
-    </div>
-    <div class="menu-section">
-      <div class="menu-section-title">Rosé & Sparkling</div>
-      <div class="drink-item"><div><div class="drink-name">Château d'Esclans 'Whispering Angel' — Provence</div></div><div class="drink-price">$22 / $78</div></div>
-      <div class="drink-item"><div><div class="drink-name">Moët & Chandon Impérial — Champagne</div></div><div class="drink-price">$170 btl</div></div>
-      <div class="drink-item"><div><div class="drink-name">Dom Pérignon Brut — Champagne</div></div><div class="drink-price">$525 btl</div></div>
-    </div>
-  </div>
 </div>
 
 <!-- WIFI OVERLAY -->
