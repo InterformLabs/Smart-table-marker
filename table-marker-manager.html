@@ -10,36 +10,14 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --black: #080808;
-    --surface: #0f0f0f;
-    --surface2: #161616;
-    --white: #f0ece4;
-    --gold: #c9a96e;
-    --gold-dim: rgba(201,169,110,0.1);
-    --gold-line: rgba(201,169,110,0.25);
-    --mid: rgba(240,236,228,0.45);
-    --faint: rgba(240,236,228,0.08);
-    --green: #4caf7d;
-    --red: #c45a5a;
-    --orange: #e09b50;
-    --blue: #5a8fc4;
+    --black: #080808; --surface: #0f0f0f; --surface2: #161616;
+    --white: #f0ece4; --gold: #c9a96e; --gold-dim: rgba(201,169,110,0.1);
+    --gold-line: rgba(201,169,110,0.25); --mid: rgba(240,236,228,0.45);
+    --faint: rgba(240,236,228,0.08); --green: #4caf7d; --red: #c45a5a;
+    --orange: #e09b50; --blue: #5a8fc4;
   }
-  html, body {
-    min-height: 100%;
-    background: var(--black);
-    color: var(--white);
-    font-family: 'Outfit', sans-serif;
-    font-weight: 300;
-  }
-
-  /* HEADER */
-  .header {
-    background: var(--surface);
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-    padding: 16px 24px;
-    display: flex; align-items: center; justify-content: space-between;
-    position: sticky; top: 0; z-index: 10;
-  }
+  html, body { min-height: 100%; background: var(--black); color: var(--white); font-family: 'Outfit', sans-serif; font-weight: 300; }
+  .header { background: var(--surface); border-bottom: 1px solid rgba(255,255,255,0.06); padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; }
   .header-left { display: flex; flex-direction: column; gap: 2px; }
   .header-brand { font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); }
   .header-title { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 400; color: var(--white); letter-spacing: 0.05em; }
@@ -48,64 +26,21 @@
   .live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
   .refresh-btn { padding: 8px 16px; border: 1px solid var(--gold-line); background: var(--gold-dim); color: var(--gold); font-family: 'Outfit', sans-serif; font-size: 11px; letter-spacing: 0.1em; cursor: pointer; transition: background 0.2s; }
   .refresh-btn:hover { background: rgba(201,169,110,0.18); }
-
-  /* SHIFT TOGGLE */
-  .shift-section {
-    padding: 16px 16px 0;
-  }
-  .shift-label {
-    font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase;
-    color: var(--mid); margin-bottom: 10px;
-  }
-  .shift-toggle {
-    display: flex; gap: 8px;
-  }
-  .shift-btn {
-    flex: 1; padding: 12px 16px;
-    border: 1px solid rgba(255,255,255,0.1);
-    background: transparent;
-    color: var(--mid);
-    font-family: 'Outfit', sans-serif;
-    font-size: 13px; font-weight: 400;
-    letter-spacing: 0.05em;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: flex; flex-direction: column; align-items: flex-start; gap: 3px;
-  }
+  .shift-section { padding: 16px 16px 0; }
+  .shift-label { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--mid); margin-bottom: 10px; }
+  .shift-toggle { display: flex; gap: 8px; }
+  .shift-btn { flex: 1; padding: 12px 16px; border: 1px solid rgba(255,255,255,0.1); background: transparent; color: var(--mid); font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 400; letter-spacing: 0.05em; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; align-items: flex-start; gap: 3px; }
   .shift-btn .shift-name { font-size: 14px; font-weight: 500; }
   .shift-btn .shift-role { font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.6; }
-  .shift-btn.active {
-    border-color: var(--green);
-    background: rgba(76,175,125,0.08);
-    color: var(--white);
-  }
+  .shift-btn.active { border-color: var(--green); background: rgba(76,175,125,0.08); color: var(--white); }
   .shift-btn.active .shift-name { color: var(--green); }
-  .shift-btn.active::after {
-    content: '● ON SHIFT';
-    font-size: 8px; letter-spacing: 0.2em;
-    color: var(--green); margin-top: 2px;
-  }
-
-  /* INSIGHT BANNER */
-  .insight-banner {
-    margin: 16px 16px 0;
-    padding: 14px 16px;
-    border: 1px solid rgba(90,143,196,0.35);
-    background: rgba(90,143,196,0.06);
-    display: flex; align-items: flex-start; gap: 12px;
-  }
+  .shift-btn.active::after { content: '● ON SHIFT'; font-size: 8px; letter-spacing: 0.2em; color: var(--green); margin-top: 2px; }
+  .insight-banner { margin: 16px 16px 0; padding: 14px 16px; border: 1px solid rgba(90,143,196,0.35); background: rgba(90,143,196,0.06); display: flex; align-items: flex-start; gap: 12px; }
   .insight-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
   .insight-body { flex: 1; }
-  .insight-tag {
-    font-size: 8px; letter-spacing: 0.3em; text-transform: uppercase;
-    color: var(--blue); margin-bottom: 5px;
-  }
-  .insight-text {
-    font-size: 13px; color: var(--white); line-height: 1.5;
-  }
+  .insight-tag { font-size: 8px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--blue); margin-bottom: 5px; }
+  .insight-text { font-size: 13px; color: var(--white); line-height: 1.5; }
   .insight-text strong { color: var(--blue); }
-
-  /* STATS */
   .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 16px 16px 0; }
   .stat-card { background: var(--surface); border: 1px solid rgba(255,255,255,0.06); padding: 16px; }
   .stat-label { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--mid); margin-bottom: 8px; }
@@ -113,16 +48,12 @@
   .stat-value.good { color: var(--green); }
   .stat-value.bad { color: var(--red); }
   .stat-sub { font-size: 10px; color: var(--mid); margin-top: 4px; }
-
-  /* FILTER */
   .filter-row { display: flex; gap: 8px; padding: 16px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
   .filter-btn { padding: 6px 14px; border: 1px solid rgba(255,255,255,0.1); background: transparent; color: var(--mid); font-family: 'Outfit', sans-serif; font-size: 11px; letter-spacing: 0.08em; cursor: pointer; white-space: nowrap; transition: all 0.2s; border-radius: 2px; }
   .filter-btn.active { border-color: var(--gold); background: var(--gold-dim); color: var(--gold); }
-
-  /* REVIEWS */
   .reviews { padding: 0 16px 24px; }
   .section-label { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--mid); margin-bottom: 12px; padding-top: 4px; }
-  .review-card { background: var(--surface); border: 1px solid rgba(255,255,255,0.06); padding: 16px; margin-bottom: 10px; transition: border-color 0.2s; }
+  .review-card { background: var(--surface); border: 1px solid rgba(255,255,255,0.06); padding: 16px; margin-bottom: 10px; }
   .review-card.negative { border-left: 3px solid var(--red); }
   .review-card.neutral { border-left: 3px solid var(--orange); }
   .review-card.positive { border-left: 3px solid var(--green); }
@@ -137,12 +68,10 @@
   .empty { text-align: center; padding: 60px 20px; color: var(--mid); font-size: 13px; letter-spacing: 0.08em; }
   .empty-icon { font-size: 36px; margin-bottom: 16px; opacity: 0.4; }
   .loading { text-align: center; padding: 40px; color: var(--mid); font-size: 12px; letter-spacing: 0.1em; }
-
   @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 </style>
 </head>
 <body>
-
 <div class="header">
   <div class="header-left">
     <div class="header-brand">Interform · Manager Dashboard</div>
@@ -153,23 +82,19 @@
     <button class="refresh-btn" onclick="loadReviews()">↻ Refresh</button>
   </div>
 </div>
-
-<!-- SHIFT TOGGLE -->
 <div class="shift-section">
   <div class="shift-label">Manager on shift — receiving alerts</div>
   <div class="shift-toggle">
-    <button class="shift-btn active" id="shiftBill" onclick="setShift('bill')">
+    <button class="shift-btn active" id="shiftBill" onclick="toggleShift('shiftBill')">
       <span class="shift-name">Bill</span>
       <span class="shift-role">General Manager</span>
     </button>
-    <button class="shift-btn" id="shiftYevhen" onclick="setShift('yevhen')">
+    <button class="shift-btn" id="shiftYevhen" onclick="toggleShift('shiftYevhen')">
       <span class="shift-name">Yevhen</span>
       <span class="shift-role">Manager</span>
     </button>
   </div>
 </div>
-
-<!-- INSIGHT BANNER -->
 <div class="insight-banner">
   <div class="insight-icon">💡</div>
   <div class="insight-body">
@@ -177,9 +102,7 @@
     <div class="insight-text" id="insightText">Analyzing feedback patterns…</div>
   </div>
 </div>
-
-<!-- STATS -->
-<div class="stats-row" id="statsRow">
+<div class="stats-row">
   <div class="stat-card">
     <div class="stat-label">Total Today</div>
     <div class="stat-value" id="statTotal">—</div>
@@ -196,8 +119,6 @@
     <div class="stat-sub">flagged</div>
   </div>
 </div>
-
-<!-- FILTER -->
 <div class="filter-row">
   <button class="filter-btn active" onclick="setFilter('all', this)">All</button>
   <button class="filter-btn" onclick="setFilter('negative', this)">⚠️ Needs Attention</button>
@@ -205,56 +126,44 @@
   <button class="filter-btn" onclick="setFilter('billfold', this)">Billfold</button>
   <button class="filter-btn" onclick="setFilter('positive', this)">Positive</button>
 </div>
-
 <div class="reviews">
   <div class="section-label">Recent Feedback</div>
   <div id="reviewsList"><div class="loading">Loading reviews…</div></div>
 </div>
-
 <script>
   const SUPABASE_URL = 'https://ummpjbwreufxrlsnvycx.supabase.co';
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVtbXBqYndyZXVmeHJsc252eWN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxMTM3NzksImV4cCI6MjA5MTY4OTc3OX0.Z1TbTd-2Ih64feNXCl7jkwog59szTRmWt4ep5SWmjmQ';
-
   let allReviews = [];
   let currentFilter = 'all';
-  let activeShift = 'bill';
-
   const emojiMap = { 1: '😕', 2: '😐', 3: '🙂', 4: '😊', 5: '🤩' };
   const labelMap = { 1: 'Not good', 2: 'Could be better', 3: 'Good', 4: 'Great', 5: 'Amazing' };
+
+  function toggleShift(id) {
+    document.getElementById(id).classList.toggle('active');
+  }
 
   function getRatingClass(r) {
     if (r <= 2) return 'negative';
     if (r === 3) return 'neutral';
     return 'positive';
   }
-
   function formatTime(ts) {
     if (!ts) return '';
     const d = new Date(ts);
     return d.toLocaleTimeString('en-CA', { hour: '2-digit', minute: '2-digit' }) + ' · ' +
            d.toLocaleDateString('en-CA', { month: 'short', day: 'numeric' });
   }
-
-  function setShift(person) {
-    activeShift = person;
-    document.getElementById('shiftBill').classList.toggle('active', person === 'bill');
-    document.getElementById('shiftYevhen').classList.toggle('active', person === 'yevhen');
-  }
-
   function setFilter(filter, btn) {
     currentFilter = filter;
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     renderReviews();
   }
-
   function generateInsight(reviews) {
     if (!reviews || reviews.length === 0) {
       document.getElementById('insightText').innerHTML = 'No feedback data yet this week.';
       return;
     }
-
-    // Count keyword mentions
     const comments = reviews.map(r => (r.comment || '').toLowerCase());
     const keywords = ['test', 'service', 'food', 'wait', 'slow', 'great', 'good', 'bad', 'excellent', 'cold', 'staff'];
     let topWord = null, topCount = 0;
@@ -262,10 +171,8 @@
       const count = comments.filter(c => c.includes(w)).length;
       if (count > topCount) { topCount = count; topWord = w; }
     });
-
     const negCount = reviews.filter(r => r.rating <= 2).length;
-    const avgRating = reviews.length > 0 ? (reviews.reduce((s, r) => s + r.rating, 0) / reviews.length).toFixed(1) : 0;
-
+    const avgRating = (reviews.reduce((s, r) => s + r.rating, 0) / reviews.length).toFixed(1);
     let text = '';
     if (topWord && topCount >= 1) {
       text = `<strong>${topCount} review${topCount > 1 ? 's' : ''} mention${topCount === 1 ? 's' : ''} "${topWord}"</strong> this week — worth reviewing for patterns.`;
@@ -276,20 +183,17 @@
     }
     document.getElementById('insightText').innerHTML = text;
   }
-
   function renderReviews() {
     let filtered = allReviews;
     if (currentFilter === 'negative') filtered = allReviews.filter(r => r.rating <= 3);
     else if (currentFilter === 'positive') filtered = allReviews.filter(r => r.rating >= 4);
     else if (currentFilter === 'table-marker') filtered = allReviews.filter(r => r.source === 'table-marker');
     else if (currentFilter === 'billfold') filtered = allReviews.filter(r => r.source !== 'table-marker');
-
     const list = document.getElementById('reviewsList');
     if (filtered.length === 0) {
       list.innerHTML = '<div class="empty"><div class="empty-icon">✦</div>No reviews yet for this filter.</div>';
       return;
     }
-
     list.innerHTML = filtered.map(r => `
       <div class="review-card ${getRatingClass(r.rating)}">
         <div class="review-header">
@@ -306,7 +210,6 @@
       </div>
     `).join('');
   }
-
   function updateStats() {
     const total = allReviews.length;
     const avg = total > 0 ? (allReviews.reduce((s, r) => s + r.rating, 0) / total).toFixed(1) : '—';
@@ -316,7 +219,6 @@
     document.getElementById('statAvg').className = 'stat-value ' + (avg >= 4 ? 'good' : avg >= 3 ? '' : 'bad');
     document.getElementById('statAlert').textContent = alerts;
   }
-
   async function loadReviews() {
     try {
       const res = await fetch(`${SUPABASE_URL}/rest/v1/reviews?select=*&order=created_at.desc&limit=50`, {
@@ -332,7 +234,6 @@
       document.getElementById('reviewsList').innerHTML = '<div class="loading">Unable to load reviews.</div>';
     }
   }
-
   loadReviews();
   setInterval(loadReviews, 30000);
 </script>
