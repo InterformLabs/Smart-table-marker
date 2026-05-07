@@ -6,7 +6,7 @@
 <title>Tap & Barrel Bridges</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -19,6 +19,9 @@
     --red: #c0392b;
     --red-dim: rgba(192,57,43,0.1);
     --red-line: rgba(192,57,43,0.3);
+    --green: #4caf7d;
+    --green-dim: rgba(76,175,125,0.1);
+    --green-line: rgba(76,175,125,0.3);
   }
   html, body {
     height: 100%;
@@ -56,7 +59,7 @@
     opacity: 0; animation: fadeDown 0.6s ease forwards 0.1s;
   }
   .restaurant-name {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Playfair Display', serif;
     font-size: 12px; font-weight: 400;
     letter-spacing: 0.25em; text-transform: uppercase;
     color: rgba(240,236,228,0.5);
@@ -74,7 +77,7 @@
     opacity: 0; animation: fadeUp 0.7s ease forwards 0.4s;
   }
   .heading-wrap h1 {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Playfair Display', serif;
     font-size: clamp(32px, 8vw, 52px);
     font-weight: 300; line-height: 1.1;
     letter-spacing: 0.02em; color: var(--white);
@@ -89,7 +92,7 @@
   .grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    gap: 10px;
     width: 100%; max-width: 340px;
     opacity: 0; animation: fadeUp 0.7s ease forwards 0.7s;
   }
@@ -97,7 +100,7 @@
     position: relative;
     display: flex; flex-direction: column;
     align-items: flex-start;
-    padding: 18px 20px;
+    padding: 16px 18px;
     border: 1px solid;
     text-decoration: none;
     cursor: pointer;
@@ -110,15 +113,18 @@
     text-align: left;
   }
   .btn:active { transform: scale(0.97); }
-  .btn-icon { font-size: 22px; margin-bottom: 10px; line-height: 1; }
+  .btn-icon { font-size: 20px; margin-bottom: 8px; line-height: 1; }
   .btn-label { font-size: 13px; font-weight: 500; letter-spacing: 0.04em; line-height: 1.3; }
   .btn-sub { font-size: 10px; letter-spacing: 0.08em; color: var(--mid); margin-top: 3px; font-weight: 300; }
   .btn-food { border-color: var(--gold-line); background: var(--gold-dim); }
   .btn-food:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,169,110,0.12); border-color: rgba(201,169,110,0.5); }
   .btn-food .btn-label { color: var(--gold); }
+  .btn-green { border-color: var(--green-line); background: var(--green-dim); }
+  .btn-green:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(76,175,125,0.12); border-color: rgba(76,175,125,0.5); }
+  .btn-green .btn-label { color: var(--green); }
   .btn-feedback { border-color: var(--red-line); background: var(--red-dim); grid-column: span 2; flex-direction: row; align-items: center; gap: 16px; }
   .btn-feedback:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(192,57,43,0.12); border-color: rgba(192,57,43,0.5); }
-  .btn-feedback .btn-icon { margin-bottom: 0; font-size: 26px; }
+  .btn-feedback .btn-icon { margin-bottom: 0; font-size: 24px; }
   .btn-feedback .btn-label { color: #e57373; }
   .btn-feedback .btn-content { display: flex; flex-direction: column; }
   .btn-disabled {
@@ -138,7 +144,7 @@
   .deco-line-bottom {
     width: 1px; height: 32px;
     background: linear-gradient(to bottom, var(--gold-line), transparent);
-    margin-top: 32px;
+    margin-top: 28px;
     opacity: 0; animation: fadeIn 0.8s ease forwards 1s;
   }
   .footer {
@@ -149,6 +155,8 @@
     opacity: 0; animation: fadeIn 0.8s ease forwards 1.1s;
     white-space: nowrap;
   }
+
+  /* OVERLAY */
   .overlay {
     position: fixed; inset: 0;
     background: var(--black);
@@ -166,7 +174,7 @@
     flex-shrink: 0;
   }
   .overlay-title {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Playfair Display', serif;
     font-size: 18px; font-weight: 400;
     letter-spacing: 0.15em; text-transform: uppercase;
     color: var(--gold);
@@ -182,21 +190,79 @@
   }
   .close-btn:hover { border-color: var(--gold-line); color: var(--gold); }
   .overlay-content { flex: 1; overflow-y: auto; padding: 24px; }
+
+  /* WIFI PANEL */
   .wifi-content {
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
-    height: 100%; gap: 24px; text-align: center;
-    padding: 40px;
+    height: 100%; gap: 28px; text-align: center;
+    padding: 40px 24px;
   }
-  .wifi-icon { font-size: 56px; color: var(--gold); }
-  .wifi-name { font-family: 'Cormorant Garamond', serif; font-size: 32px; color: var(--white); letter-spacing: 0.05em; }
-  .wifi-label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--mid); }
-  .wifi-open {
-    font-size: 14px; color: var(--gold);
-    letter-spacing: 0.1em; padding: 14px 28px;
+  .wifi-icon { font-size: 52px; }
+  .wifi-block { display: flex; flex-direction: column; gap: 6px; }
+  .wifi-label { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--mid); }
+  .wifi-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px; color: var(--white); letter-spacing: 0.05em;
+  }
+  .wifi-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 20px;
+    border: 1px solid var(--green-line);
+    background: var(--green-dim);
+    color: var(--green);
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    margin-top: 4px;
+  }
+  .wifi-note {
+    font-size: 11px; color: var(--mid);
+    letter-spacing: 0.05em; line-height: 1.7;
+    max-width: 260px;
+  }
+
+  /* SPECIALS PANEL */
+  .specials-content { display: flex; flex-direction: column; gap: 16px; padding-bottom: 20px; }
+  .special-card {
     border: 1px solid var(--gold-line);
     background: var(--gold-dim);
+    padding: 18px 20px;
   }
+  .special-tag {
+    font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 6px; opacity: 0.8;
+  }
+  .special-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; color: var(--white); margin-bottom: 4px;
+  }
+  .special-desc { font-size: 12px; color: var(--mid); line-height: 1.6; }
+  .special-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; color: var(--gold);
+    margin-top: 10px;
+  }
+  .promo-card {
+    border: 1px solid rgba(201,169,110,0.4);
+    background: rgba(201,169,110,0.06);
+    padding: 18px 20px;
+    text-align: center;
+  }
+  .promo-label {
+    font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 8px;
+  }
+  .promo-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px; color: var(--white); margin-bottom: 6px;
+  }
+  .promo-desc { font-size: 12px; color: var(--mid); line-height: 1.6; }
+  .placeholder-note {
+    font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: rgba(201,169,110,0.3); text-align: center; padding: 12px 0;
+    border-top: 1px solid rgba(201,169,110,0.1);
+    margin-top: 4px;
+  }
+
   .ripple {
     position: absolute; border-radius: 50%;
     width: 8px; height: 8px;
@@ -221,7 +287,7 @@
   </div>
   <div class="deco-line"></div>
   <div class="heading-wrap">
-    <h1>Welcome to<br><em>Bridges</em></h1>
+    <h1>Welcome to<br><em style="color: var(--gold); font-style: italic;">Bridges</em></h1>
   </div>
   <p class="subtitle">Our goal is to make your experience perfect</p>
   <div class="grid">
@@ -244,6 +310,12 @@
       <div class="btn-sub">Free guest access</div>
     </button>
 
+    <a class="btn btn-food" href="Deserts.png" target="_blank">
+      <span class="btn-icon">🍮</span>
+      <div class="btn-label">Dessert Menu</div>
+      <div class="btn-sub">Sweet endings</div>
+    </a>
+
     <button class="btn btn-disabled" style="cursor:default">
       <span class="btn-icon">🎁</span>
       <div class="btn-label">Loyalty Rewards</div>
@@ -251,13 +323,11 @@
       <span class="btn-request">Available by request</span>
     </button>
 
-    <button class="btn btn-disabled" style="cursor:default; grid-column: span 2; flex-direction: row; align-items: center; gap: 16px;">
-      <span class="btn-icon" style="margin-bottom:0; font-size:22px;">🙋</span>
-      <div>
-        <div class="btn-label">Call Your Server</div>
-        <div class="btn-sub">We'll be right with you</div>
-        <span class="btn-request">Available by request</span>
-      </div>
+    <button class="btn btn-disabled" style="cursor:default">
+      <span class="btn-icon">🙋</span>
+      <div class="btn-label">Call Your Server</div>
+      <div class="btn-sub">We'll be right with you</div>
+      <span class="btn-request">Available by request</span>
     </button>
 
     <a class="btn btn-feedback" href="feedback.html">
@@ -282,14 +352,58 @@
   <div class="overlay-content">
     <div class="wifi-content">
       <div class="wifi-icon">📶</div>
-      <div>
-        <div class="wifi-label" style="margin-bottom:8px">Network</div>
+      <div class="wifi-block">
+        <div class="wifi-label">Network Name</div>
         <div class="wifi-name">TapGuest</div>
       </div>
-      <div class="wifi-open">No password required</div>
-      <div style="font-size:11px; color:var(--mid); text-align:center; line-height:1.6;">
-        Complimentary WiFi for all guests.<br>Please ask your server if you need assistance.
+      <div class="wifi-badge">✓ &nbsp; No password required</div>
+      <div class="wifi-note">
+        Select <strong>TapGuest</strong> from your WiFi settings.<br>
+        Open network — connects instantly.<br><br>
+        Need help? Ask your server.
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- SPECIALS OVERLAY -->
+<div class="overlay" id="specialsOverlay">
+  <div class="overlay-header">
+    <span class="overlay-title">Today's Specials</span>
+    <button class="close-btn" onclick="closeOverlay('specials')">✕</button>
+  </div>
+  <div class="overlay-content">
+    <div class="specials-content">
+
+      <div class="special-card">
+        <div class="special-tag">Feature — Seafood Season</div>
+        <div class="special-name">Dungeness Crab Bisque</div>
+        <div class="special-desc">Freshly prepared with local Dungeness crab, crème fraîche, and a hint of cognac. Served with sourdough crostini.</div>
+        <div class="special-price">$18</div>
+      </div>
+
+      <div class="special-card">
+        <div class="special-tag">Chef's Special</div>
+        <div class="special-name">Pan-Seared Halibut</div>
+        <div class="special-desc">Pacific halibut with roasted fennel, saffron beurre blanc, and seasonal micro greens.</div>
+        <div class="special-price">$42</div>
+      </div>
+
+      <div class="special-card">
+        <div class="special-tag">Cocktail of the Week</div>
+        <div class="special-name">Pacific Sunset</div>
+        <div class="special-desc">Tequila blanco, yuzu, elderflower, sparkling water, and a dried citrus garnish.</div>
+        <div class="special-price">$16</div>
+      </div>
+
+      <div class="promo-card">
+        <div class="promo-label">This Week Only</div>
+        <div class="promo-title">Happy Hour Extended</div>
+        <div class="promo-desc">Join us Monday – Wednesday from 3–6pm for $2 off all draft beer and select wine by the glass.</div>
+      </div>
+
+      <div class="placeholder-note">Content updated daily by the Bridges team</div>
+
     </div>
   </div>
 </div>
