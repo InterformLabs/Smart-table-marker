@@ -22,6 +22,7 @@
     --green: #4caf7d;
     --red: #c45a5a;
     --orange: #e09b50;
+    --blue: #5a8fc4;
   }
   html, body {
     min-height: 100%;
@@ -40,139 +41,104 @@
     position: sticky; top: 0; z-index: 10;
   }
   .header-left { display: flex; flex-direction: column; gap: 2px; }
-  .header-brand {
-    font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase;
-    color: var(--gold);
-  }
-  .header-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 18px; font-weight: 400; color: var(--white);
-    letter-spacing: 0.05em;
-  }
+  .header-brand { font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); }
+  .header-title { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 400; color: var(--white); letter-spacing: 0.05em; }
   .header-right { display: flex; align-items: center; gap: 12px; }
-  .live-badge {
-    display: flex; align-items: center; gap: 6px;
-    font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--green);
-  }
-  .live-dot {
-    width: 6px; height: 6px; border-radius: 50%;
-    background: var(--green);
-    animation: pulse 2s infinite;
-  }
-  .refresh-btn {
-    padding: 8px 16px;
-    border: 1px solid var(--gold-line);
-    background: var(--gold-dim);
-    color: var(--gold);
-    font-family: 'Outfit', sans-serif;
-    font-size: 11px; letter-spacing: 0.1em;
-    cursor: pointer; transition: background 0.2s;
-  }
+  .live-badge { display: flex; align-items: center; gap: 6px; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); }
+  .live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
+  .refresh-btn { padding: 8px 16px; border: 1px solid var(--gold-line); background: var(--gold-dim); color: var(--gold); font-family: 'Outfit', sans-serif; font-size: 11px; letter-spacing: 0.1em; cursor: pointer; transition: background 0.2s; }
   .refresh-btn:hover { background: rgba(201,169,110,0.18); }
 
+  /* SHIFT TOGGLE */
+  .shift-section {
+    padding: 16px 16px 0;
+  }
+  .shift-label {
+    font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--mid); margin-bottom: 10px;
+  }
+  .shift-toggle {
+    display: flex; gap: 8px;
+  }
+  .shift-btn {
+    flex: 1; padding: 12px 16px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: transparent;
+    color: var(--mid);
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px; font-weight: 400;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex; flex-direction: column; align-items: flex-start; gap: 3px;
+  }
+  .shift-btn .shift-name { font-size: 14px; font-weight: 500; }
+  .shift-btn .shift-role { font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.6; }
+  .shift-btn.active {
+    border-color: var(--green);
+    background: rgba(76,175,125,0.08);
+    color: var(--white);
+  }
+  .shift-btn.active .shift-name { color: var(--green); }
+  .shift-btn.active::after {
+    content: '● ON SHIFT';
+    font-size: 8px; letter-spacing: 0.2em;
+    color: var(--green); margin-top: 2px;
+  }
+
+  /* INSIGHT BANNER */
+  .insight-banner {
+    margin: 16px 16px 0;
+    padding: 14px 16px;
+    border: 1px solid rgba(90,143,196,0.35);
+    background: rgba(90,143,196,0.06);
+    display: flex; align-items: flex-start; gap: 12px;
+  }
+  .insight-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+  .insight-body { flex: 1; }
+  .insight-tag {
+    font-size: 8px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--blue); margin-bottom: 5px;
+  }
+  .insight-text {
+    font-size: 13px; color: var(--white); line-height: 1.5;
+  }
+  .insight-text strong { color: var(--blue); }
+
   /* STATS */
-  .stats-row {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 12px; padding: 20px 16px 0;
-  }
-  .stat-card {
-    background: var(--surface);
-    border: 1px solid rgba(255,255,255,0.06);
-    padding: 16px;
-  }
-  .stat-label {
-    font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
-    color: var(--mid); margin-bottom: 8px;
-  }
-  .stat-value {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 32px; font-weight: 300; color: var(--white); line-height: 1;
-  }
+  .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 16px 16px 0; }
+  .stat-card { background: var(--surface); border: 1px solid rgba(255,255,255,0.06); padding: 16px; }
+  .stat-label { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--mid); margin-bottom: 8px; }
+  .stat-value { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 300; color: var(--white); line-height: 1; }
   .stat-value.good { color: var(--green); }
   .stat-value.bad { color: var(--red); }
   .stat-sub { font-size: 10px; color: var(--mid); margin-top: 4px; }
 
   /* FILTER */
-  .filter-row {
-    display: flex; gap: 8px; padding: 16px;
-    overflow-x: auto; -webkit-overflow-scrolling: touch;
-  }
-  .filter-btn {
-    padding: 6px 14px; border: 1px solid rgba(255,255,255,0.1);
-    background: transparent; color: var(--mid);
-    font-family: 'Outfit', sans-serif; font-size: 11px;
-    letter-spacing: 0.08em; cursor: pointer; white-space: nowrap;
-    transition: all 0.2s; border-radius: 2px;
-  }
-  .filter-btn.active {
-    border-color: var(--gold); background: var(--gold-dim); color: var(--gold);
-  }
+  .filter-row { display: flex; gap: 8px; padding: 16px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .filter-btn { padding: 6px 14px; border: 1px solid rgba(255,255,255,0.1); background: transparent; color: var(--mid); font-family: 'Outfit', sans-serif; font-size: 11px; letter-spacing: 0.08em; cursor: pointer; white-space: nowrap; transition: all 0.2s; border-radius: 2px; }
+  .filter-btn.active { border-color: var(--gold); background: var(--gold-dim); color: var(--gold); }
 
   /* REVIEWS */
   .reviews { padding: 0 16px 24px; }
-  .section-label {
-    font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase;
-    color: var(--mid); margin-bottom: 12px; padding-top: 4px;
-  }
-  .review-card {
-    background: var(--surface);
-    border: 1px solid rgba(255,255,255,0.06);
-    padding: 16px; margin-bottom: 10px;
-    transition: border-color 0.2s;
-  }
+  .section-label { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--mid); margin-bottom: 12px; padding-top: 4px; }
+  .review-card { background: var(--surface); border: 1px solid rgba(255,255,255,0.06); padding: 16px; margin-bottom: 10px; transition: border-color 0.2s; }
   .review-card.negative { border-left: 3px solid var(--red); }
   .review-card.neutral { border-left: 3px solid var(--orange); }
   .review-card.positive { border-left: 3px solid var(--green); }
-
-  .review-header {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 10px;
-  }
+  .review-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
   .review-left { display: flex; align-items: center; gap: 10px; }
   .review-emoji { font-size: 24px; line-height: 1; }
-  .review-rating-text {
-    font-size: 13px; font-weight: 500; color: var(--white);
-  }
-  .review-source {
-    font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
-    padding: 2px 6px; border: 1px solid rgba(255,255,255,0.1);
-    color: var(--mid);
-  }
+  .review-rating-text { font-size: 13px; font-weight: 500; color: var(--white); }
+  .review-source { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; padding: 2px 6px; border: 1px solid rgba(255,255,255,0.1); color: var(--mid); }
   .review-time { font-size: 10px; color: var(--mid); }
-  .review-comment {
-    font-size: 13px; color: rgba(240,236,228,0.7);
-    line-height: 1.6; font-style: italic;
-    padding: 10px 12px;
-    background: rgba(255,255,255,0.03);
-    border-left: 2px solid rgba(255,255,255,0.06);
-    margin-top: 8px;
-  }
-  .review-alert {
-    display: flex; align-items: center; gap: 8px;
-    margin-top: 10px; padding: 8px 10px;
-    background: rgba(196,90,90,0.08);
-    border: 1px solid rgba(196,90,90,0.2);
-    font-size: 11px; color: var(--red); letter-spacing: 0.05em;
-  }
-
-  /* EMPTY */
-  .empty {
-    text-align: center; padding: 60px 20px;
-    color: var(--mid); font-size: 13px; letter-spacing: 0.08em;
-  }
+  .review-comment { font-size: 13px; color: rgba(240,236,228,0.7); line-height: 1.6; font-style: italic; padding: 10px 12px; background: rgba(255,255,255,0.03); border-left: 2px solid rgba(255,255,255,0.06); margin-top: 8px; }
+  .review-alert { display: flex; align-items: center; gap: 8px; margin-top: 10px; padding: 8px 10px; background: rgba(196,90,90,0.08); border: 1px solid rgba(196,90,90,0.2); font-size: 11px; color: var(--red); letter-spacing: 0.05em; }
+  .empty { text-align: center; padding: 60px 20px; color: var(--mid); font-size: 13px; letter-spacing: 0.08em; }
   .empty-icon { font-size: 36px; margin-bottom: 16px; opacity: 0.4; }
+  .loading { text-align: center; padding: 40px; color: var(--mid); font-size: 12px; letter-spacing: 0.1em; }
 
-  /* LOADING */
-  .loading {
-    text-align: center; padding: 40px;
-    color: var(--mid); font-size: 12px; letter-spacing: 0.1em;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
-  }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 </style>
 </head>
 <body>
@@ -183,14 +149,36 @@
     <div class="header-title">Tap & Barrel Bridges</div>
   </div>
   <div class="header-right">
-    <div class="live-badge">
-      <div class="live-dot"></div>
-      Live
-    </div>
+    <div class="live-badge"><div class="live-dot"></div>Live</div>
     <button class="refresh-btn" onclick="loadReviews()">↻ Refresh</button>
   </div>
 </div>
 
+<!-- SHIFT TOGGLE -->
+<div class="shift-section">
+  <div class="shift-label">Manager on shift — receiving alerts</div>
+  <div class="shift-toggle">
+    <button class="shift-btn active" id="shiftBill" onclick="setShift('bill')">
+      <span class="shift-name">Bill</span>
+      <span class="shift-role">General Manager</span>
+    </button>
+    <button class="shift-btn" id="shiftYevhen" onclick="setShift('yevhen')">
+      <span class="shift-name">Yevhen</span>
+      <span class="shift-role">Manager</span>
+    </button>
+  </div>
+</div>
+
+<!-- INSIGHT BANNER -->
+<div class="insight-banner">
+  <div class="insight-icon">💡</div>
+  <div class="insight-body">
+    <div class="insight-tag">Weekly Insight</div>
+    <div class="insight-text" id="insightText">Analyzing feedback patterns…</div>
+  </div>
+</div>
+
+<!-- STATS -->
 <div class="stats-row" id="statsRow">
   <div class="stat-card">
     <div class="stat-label">Total Today</div>
@@ -209,6 +197,7 @@
   </div>
 </div>
 
+<!-- FILTER -->
 <div class="filter-row">
   <button class="filter-btn active" onclick="setFilter('all', this)">All</button>
   <button class="filter-btn" onclick="setFilter('negative', this)">⚠️ Needs Attention</button>
@@ -228,6 +217,7 @@
 
   let allReviews = [];
   let currentFilter = 'all';
+  let activeShift = 'bill';
 
   const emojiMap = { 1: '😕', 2: '😐', 3: '🙂', 4: '😊', 5: '🤩' };
   const labelMap = { 1: 'Not good', 2: 'Could be better', 3: 'Good', 4: 'Great', 5: 'Amazing' };
@@ -245,11 +235,46 @@
            d.toLocaleDateString('en-CA', { month: 'short', day: 'numeric' });
   }
 
+  function setShift(person) {
+    activeShift = person;
+    document.getElementById('shiftBill').classList.toggle('active', person === 'bill');
+    document.getElementById('shiftYevhen').classList.toggle('active', person === 'yevhen');
+  }
+
   function setFilter(filter, btn) {
     currentFilter = filter;
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     renderReviews();
+  }
+
+  function generateInsight(reviews) {
+    if (!reviews || reviews.length === 0) {
+      document.getElementById('insightText').innerHTML = 'No feedback data yet this week.';
+      return;
+    }
+
+    // Count keyword mentions
+    const comments = reviews.map(r => (r.comment || '').toLowerCase());
+    const keywords = ['test', 'service', 'food', 'wait', 'slow', 'great', 'good', 'bad', 'excellent', 'cold', 'staff'];
+    let topWord = null, topCount = 0;
+    keywords.forEach(w => {
+      const count = comments.filter(c => c.includes(w)).length;
+      if (count > topCount) { topCount = count; topWord = w; }
+    });
+
+    const negCount = reviews.filter(r => r.rating <= 2).length;
+    const avgRating = reviews.length > 0 ? (reviews.reduce((s, r) => s + r.rating, 0) / reviews.length).toFixed(1) : 0;
+
+    let text = '';
+    if (topWord && topCount >= 1) {
+      text = `<strong>${topCount} review${topCount > 1 ? 's' : ''} mention${topCount === 1 ? 's' : ''} "${topWord}"</strong> this week — worth reviewing for patterns.`;
+    } else if (negCount > 0) {
+      text = `<strong>${negCount} low-rated response${negCount > 1 ? 's' : ''}</strong> flagged this week. Average rating is <strong>${avgRating} ★</strong>.`;
+    } else {
+      text = `All feedback this week is positive. Average rating <strong>${avgRating} ★</strong> — great work from the team.`;
+    }
+    document.getElementById('insightText').innerHTML = text;
   }
 
   function renderReviews() {
@@ -276,7 +301,7 @@
           <span class="review-time">${formatTime(r.created_at)}</span>
         </div>
         ${r.comment ? `<div class="review-comment">"${r.comment}"</div>` : ''}
-        ${r.rating <= 2 ? `<div class="review-alert">⚠️ SMS notification sent to manager</div>` : ''}
+        ${r.rating <= 2 ? `<div class="review-alert">⚠️ SMS notification sent to manager on shift</div>` : ''}
         ${r.rating === 3 ? `<div class="review-alert" style="color:var(--orange);border-color:rgba(224,155,80,0.2);background:rgba(224,155,80,0.06);">⚡ Flagged for attention</div>` : ''}
       </div>
     `).join('');
@@ -286,7 +311,6 @@
     const total = allReviews.length;
     const avg = total > 0 ? (allReviews.reduce((s, r) => s + r.rating, 0) / total).toFixed(1) : '—';
     const alerts = allReviews.filter(r => r.rating <= 3).length;
-
     document.getElementById('statTotal').textContent = total || '0';
     document.getElementById('statAvg').textContent = avg;
     document.getElementById('statAvg').className = 'stat-value ' + (avg >= 4 ? 'good' : avg >= 3 ? '' : 'bad');
@@ -296,14 +320,12 @@
   async function loadReviews() {
     try {
       const res = await fetch(`${SUPABASE_URL}/rest/v1/reviews?select=*&order=created_at.desc&limit=50`, {
-        headers: {
-          'apikey': SUPABASE_KEY,
-          'Authorization': `Bearer ${SUPABASE_KEY}`,
-        }
+        headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
       });
       if (res.ok) {
         allReviews = await res.json();
         updateStats();
+        generateInsight(allReviews);
         renderReviews();
       }
     } catch (e) {
